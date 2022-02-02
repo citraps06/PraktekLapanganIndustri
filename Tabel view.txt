@@ -1,0 +1,144 @@
+CREATE VIEW data_coaching AS 
+SELECT mahasiswa.NIM, Nama_Mhs, Jurusan, Total_sks, File_Lhs, Status
+FROM mahasiswa
+INNER JOIN coaching
+ON mahasiswa.NIM = coaching.NIM
+
+CREATE VIEW data_pli AS 
+SELECT mahasiswa.NIM, Nama_Mhs, Jurusan, Perusahaan, Alamat, Total_sks, File_Lhs, Proposal, Laporan, File_NilaiSurv, File_NilaiDpl, Nilai_surv, Nilai_Dpl, Total_Nilai, Nilai_Akhir, Status
+FROM mahasiswa
+JOIN pli
+ON mahasiswa.NIM = pli.NIM
+INNER JOIN nilai
+ON mahasiswa.NIM = nilai.NIM
+
+CREATE VIEW status_pli AS 
+SELECT mahasiswa.NIM, Nama_Mhs, Jurusan, Perusahaan, Alamat, Total_sks, File_Lhs, Proposal, Nilai_surv, Nilai_Dpl, Total_Nilai, Nilai_Akhir, Status
+FROM mahasiswa
+INNER JOIN pli
+ON mahasiswa.NIM = pli.NIM
+
+
+CREATE VIEW data_dospem AS 
+SELECT pli.Id_Pli, mahasiswa.NIM, mahasiswa.Nama_Mhs, mahasiswa.Jurusan, pli.Perusahaan, pli.Alamat, dosen.NID, dosen.Nama_Dsn, dosen.Jurusan_dsn, dosen.Status
+FROM mahasiswa
+JOIN pli
+ON mahasiswa.NIM = pli.NIM
+INNER JOIN dosen
+ON dosen.NID = pli.NID
+
+--------------------------------------------------------------------------
+
+CREATE VIEW data_pli AS 
+SELECT pli.Id_Pli, pli.NIM, pli.Total_sks, pli.File_Lhs, pli.Proposal, pli.Perusahaan, pli.Alamat, nilai.Laporan, nilai.File_NilaiSurv, nilai.File_NilaiDpl, nilai.Nilai_surv,nilai.Nilai_Dpl,nilai.Total_Nilai,nilai.Nilai_Akhir
+FROM nilai
+INNER JOIN pli
+ON pli.NIM = nilai.NIM
+
+CREATE VIEW dosen_pembimbing AS 
+SELECT dospem.NIM, mahasiswa.Thn_masuk, mahasiswa.Nama_Mhs, mahasiswa.Jurusan, mahasiswa.Prodi, mahasiswa.Jk, dospem.NID, dosen.Nama_Dsn, dosen.Jurusan_dsn, dosen.Status, dosen.No_hp
+FROM dospem
+JOIN mahasiswa
+ON mahasiswa.NIM= dospem.NIM
+INNER JOIN dosen
+ON dosen.NID = dospem.NID
+
+xx CREATE VIEW data_dospem AS 
+SELECT dospem.NIM, mahasiswa.Nama_Mhs, mahasiswa.Jurusan, pli.Perusahaan, pli.Alamat, dospem.NID, dosen.Nama_Dsn, dosen.Jurusan_dsn, dosen.Status
+FROM mahasiswa
+JOIN dospem
+ON pli.NIM = mahasiswa.NIM
+INNER JOIN dosen
+ON dosen.NID = dospem.NID
+
+CREATE VIEW data_dospem AS 
+SELECT dospem.NIM, dosen_pembimbing.Nama_Mhs, dosen_pembimbing.Jurusan, dosen_pembimbing.Prodi, pli.Perusahaan, pli.Alamat, pli.Proposal
+, dospem.NID, dosen_pembimbing.Nama_Dsn, dosen_pembimbing.Jurusan_dsn, dosen_pembimbing.Status
+FROM dospem
+JOIN dosen_pembimbing
+ON dospem.NIM = dosen_pembimbing.NIM
+INNER JOIN pli
+ON pli.NIM = dospem.NIM
+
+CREATE VIEW status_pli AS 
+SELECT mahasiswa.NIM, Nama_Mhs, Jurusan, Total_sks, File_Lhs, Proposal,  Perusahaan, Alamat, Status
+FROM mahasiswa
+JOIN pli
+ON mahasiswa.NIM = pli.NIM
+SELECT pli.Id_Pli, mahasiswa.NIM, mahasiswa.Nama_Mhs, mahasiswa.Jurusan, mahasiswa.Prodi, dosen.Nama_Dsn, pli.Total_sks, pli.File_Lhs, pli.Proposal, pli.Perusahaan, pli.Alamat, pli.Laporan, pli.Nilai_surv, pli.File_surv, pli.Nilai_Dpl, pli.File_Dpl, pli.Total_Nilai, pli.Nilai_Akhir, pli.Akred, pli.Status FROM pli LEFT JOIN mahasiswa USING(NIM) LEFT JOIN dosen USING(NID);
+
+
+SELECT
+    pli.Id_Pli,
+    mahasiswa.NIM,
+    mahasiswa.Nama_Mhs,
+    mahasiswa.Jurusan,
+    mahasiswa.Prodi,
+    dosen.Nama_Dsn,
+    pli.Total_sks,
+    pli.File_Lhs,
+    pli.Proposal,
+    pli.Perusahaan,
+    pli.Bidang,
+    pli.Tanggal_Masuk,
+    pli.Tanggal_Keluar,
+    pli.Alamat,
+    pli.Laporan,
+    pli.Nilai_surv,
+    pli.File_surv,
+    pli.Nilai_Dpl,
+    pli.File_Dpl,
+    pli.Total_Nilai,
+    pli.Nilai_Akhir,
+    pli.Akred,
+    pli.Status,
+    pli.Verifikasi
+FROM
+    pli
+LEFT JOIN mahasiswa USING(NIM)
+LEFT JOIN dosen USING(NID);
+
+
+SELECT
+    pli.Id_Pli,
+    mahasiswa.NIM,
+    mahasiswa.Nama_Mhs,
+    mahasiswa.Jurusan,
+    mahasiswa.Prodi,
+    periode.periode,
+    dosen.Nama_Dsn,
+    pli.Total_sks,
+    pli.File_Lhs,
+    pli.Proposal,
+    perusahaan.Id_Perusahaan,
+    perusahaan.Nama_Perusahaan,
+    perusahaan.Alamat_Perusahaan,
+    perusahaan.Nama_Ceo,
+    perusahaan.Nama_Surv,
+    pli.Bidang,
+    pli.Tanggal_Masuk,
+    pli.Tanggal_Keluar,
+    pli.Laporan,
+    pli.Nilai_surv,
+    pli.File_surv,
+    pli.Nilai_Dpl,
+    pli.File_Dpl,
+    pli.Total_Nilai,
+    pli.Nilai_Akhir,
+    pli.Akred,
+    pli.Status,
+    pli.Verifikasi
+FROM
+    pli
+LEFT JOIN mahasiswa USING(NIM)
+LEFT JOIN periode USING(id_periode)
+LEFT JOIN dosen USING(NID)
+LEFT JOIN perusahaan USING(Id_Perusahaan);
+
+SELECT coaching.Id_Coaching, mahasiswa.NIM, mahasiswa.Nama_Mhs, mahasiswa.Jurusan,
+mahasiswa.Prodi,
+coaching.Total_sks,
+coaching.File_Lhs,
+periode.periode,
+coaching.Status
+FROM coaching LEFT JOIN mahasiswa USING(NIM) LEFT JOIN periode USING(id_periode);
